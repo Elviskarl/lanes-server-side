@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const imageSchema = mongoose.Schema({
+  user: {
+    type: String,
+    default: 'user'
+  },
   latitude: {
     type: Number,
     required: [true, 'Why no Latitude']

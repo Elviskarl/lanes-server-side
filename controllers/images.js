@@ -25,14 +25,18 @@ try {
       dateTaken: newDate
     });
     console.log(detailsUpload);
-    // if(!detailsUpload){
-    //   }
+    if(!detailsUpload){
+      res.status(400).json({message: 'Check the severity input field.'});
+      }
     res.status(200).json({message: "Successfully uploaded the image",
     data: detailsUpload
   });
 }catch(err){
   console.log(err);
-  return res.status(500).json({err});
+  return res.status(500).json({
+    errorName: err.name,
+    errMessage:err._message
+  });
 }
 }
 
