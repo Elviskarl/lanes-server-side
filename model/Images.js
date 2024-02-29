@@ -21,6 +21,14 @@ const imageSchema = mongoose.Schema({
     },
     trim: true
   },
+  cloudinary_url:{
+    type: String,
+    required: [true, 'Why no base64String']
+  },
+  cloudinary_public_id: {
+    type: String,
+    required: [true, 'Why no cloudinary_public_id']
+  },
   dateTaken: {
     type: String,
     required: [true, 'Why no date']

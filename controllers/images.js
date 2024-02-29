@@ -1,4 +1,5 @@
 const imageModel = require('../model/Images');
+const cloudinary = require('../db/cloudinary');
 function getAllImages(req,res){
   res.status(200).json({message: "Here are the images"});
 }
@@ -19,10 +20,19 @@ try {
 
     
     console.log(severity);
-    
+    // const uploadResponse = await cloudinary.uploader.upload(base64String, {});
+    const uploadResponse = await cloudinary.uploader.upload(base64String, {
+      folder: 'RoadsApp',
+      resource_type: 'image',
+      tags: [severity],
+      overwrite: true
+    });
+    console.log(uploadResponse);
     const detailsUpload = await imageModel.create({
       latitude,longitude,severity,
-      dateTaken: newDate
+      dateTaken: newDate,
+      cloudinary_url: uploadResponse.secure_url,
+      cloudinary_public_id: uploadResponse.public_id
     });
     console.log(detailsUpload);
     if(!detailsUpload){
@@ -35,7 +45,7 @@ try {
   console.log(err);
   return res.status(500).json({
     errorName: err.name,
-    errMessage:err._message
+    errMessage:err.message
   });
 }
 }
