@@ -5,13 +5,16 @@ const imageSchema = mongoose.Schema({
     type: String,
     default: 'user'
   },
-  latitude: {
-    type: Number,
-    required: [true, 'Why no Latitude']
-  },
-  longitude: {
-    type: Number,
-    required: [true, 'Why no Longitude']
+  location: {
+    type: {
+      type: String, // Don't do `{ location: { type: String } }`
+      enum: ['Point'], // 'location.type' must be 'Point'
+      required: true
+    },
+    coordinates: {
+      type: [Number],
+      required: true
+    }
   },
   severity:{
     type: String,
@@ -38,5 +41,7 @@ const imageSchema = mongoose.Schema({
     default: Date.now()
   }
 },{ timestamps: true });
+
+imageSchema.index({ location: '2dsphere' }); // Create a 2dsphere index on the location field
 
 module.exports = mongoose.model('metadata',imageSchema);

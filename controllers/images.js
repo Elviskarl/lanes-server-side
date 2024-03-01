@@ -1,7 +1,8 @@
 const imageModel = require('../model/Images');
 const cloudinary = require('../db/cloudinary');
-function getAllImages(req,res){
-  res.status(200).json({message: "Here are the images"});
+async function getAllImages(req,res){
+  const allImages = await imageModel.find({});
+  res.status(200).json({message: "Here are the images",data: allImages});
 }
 
 async function saveImage(req,res){
@@ -29,7 +30,11 @@ try {
     });
     console.log(uploadResponse);
     const detailsUpload = await imageModel.create({
-      latitude,longitude,severity,
+      severity,
+      location: {
+        type: 'Point',
+        coordinates: [latitude, longitude]
+      },
       dateTaken: newDate,
       cloudinary_url: uploadResponse.secure_url,
       cloudinary_public_id: uploadResponse.public_id
@@ -50,7 +55,4 @@ try {
 }
 }
 
-function deleteImage(req,res){
-  res.status(200).json({message: "Successfully removed the image"});
-}
-module.exports = {getAllImages,saveImage,deleteImage}
+module.exports = {getAllImages,saveImage}
