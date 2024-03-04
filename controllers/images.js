@@ -1,5 +1,6 @@
 const imageModel = require('../model/Images');
 const cloudinary = require('../db/cloudinary');
+const BadRequest = require('../errors/badRequest');
 async function getAllImages(req,res){
   const allImages = await imageModel.find({});
   res.status(200).json({message: "Here are the images",data: allImages});
@@ -42,6 +43,7 @@ try {
     console.log(detailsUpload);
     if(!detailsUpload){
       res.status(400).json({message: 'Check the severity input field.'});
+      throw new BadRequest('Check the severity input field.');
       }
     res.status(200).json({message: "Successfully uploaded the image",
     data: detailsUpload

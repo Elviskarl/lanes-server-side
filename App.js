@@ -2,7 +2,9 @@ const mongoose = require('mongoose');
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
+
 const imageRouter = require('./routes/Images');
+const loginRouter = require('./routes/Login');
 const notFound = require('./middleware/not-found');
 const app = express();
 
@@ -16,6 +18,7 @@ app.get('/',(req,res)=>{
 
 // Routes
 app.use('/api/v1',imageRouter);
+app.use('/api/v1/login',loginRouter);
 
 app.use(notFound);
 const port = process.env.PORT || 5000;
