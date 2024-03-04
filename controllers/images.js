@@ -1,9 +1,10 @@
 const imageModel = require('../model/Images');
 const cloudinary = require('../db/cloudinary');
 const BadRequest = require('../errors/badRequest');
+const { StatusCodes } = require('http-status-codes');
 async function getAllImages(req,res){
   const allImages = await imageModel.find({});
-  res.status(200).json({message: "Here are the images",data: allImages});
+  res.status(StatusCodes.OK).json({message: "Here are the images",data: allImages});
 }
 
 async function saveImage(req,res){
@@ -20,16 +21,13 @@ try {
       day: 'numeric'
     }).replace(/,/g, '');
 
-    
-    console.log(severity);
-    // const uploadResponse = await cloudinary.uploader.upload(base64String, {});
     const uploadResponse = await cloudinary.uploader.upload(base64String, {
       folder: 'RoadsApp',
       resource_type: 'image',
       tags: [severity],
       overwrite: true
     });
-    console.log(uploadResponse);
+    // console.log(uploadResponse);
     const detailsUpload = await imageModel.create({
       severity,
       location: {
@@ -42,15 +40,14 @@ try {
     });
     console.log(detailsUpload);
     if(!detailsUpload){
-      res.status(400).json({message: 'Check the severity input field.'});
       throw new BadRequest('Check the severity input field.');
       }
-    res.status(200).json({message: "Successfully uploaded the image",
+    res.status(StatusCodes.OK).json({message: "Successfully uploaded the image",
     data: detailsUpload
   });
 }catch(err){
   console.log(err);
-  return res.status(500).json({
+  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
     errorName: err.name,
     errMessage:err.message
   });

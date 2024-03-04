@@ -12,7 +12,7 @@ async function login(req,res){
     const token = jwt.sign({id, username},process.env.JWT_SECRET,{expiresIn: '1d'});
     res.status(StatusCodes.OK).json({message: "Welcome to the login route. You have created a token",token});  
   } catch (error) {
-      res.status(error.statusCode).json({message: error.message});
+      res.status(StatusCodes.UNAUTHORIZED).json({message: error.message});
   }
 }
 
