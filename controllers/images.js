@@ -47,7 +47,7 @@ try {
   });
 }catch(err){
   console.log(err);
-  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+  return res.status(err.statusCode).json({
     errorName: err.name,
     errMessage:err.message
   });

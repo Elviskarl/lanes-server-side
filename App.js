@@ -6,6 +6,8 @@ require('dotenv').config();
 const imageRouter = require('./routes/Images');
 const loginRouter = require('./routes/Login');
 const notFound = require('./middleware/not-found');
+// For now - To fit the current usage of the middleware in the app, we will not throw an error if the token is not present.
+// const auth = require('./middleware/authentication');
 const app = express();
 
 
@@ -18,7 +20,7 @@ app.get('/',(req,res)=>{
 
 // Routes
 app.use('/api/v1',imageRouter);
-app.use('/api/v1/login',loginRouter);
+app.use('/api/v1/user',loginRouter);
 
 app.use(notFound);
 const port = process.env.PORT || 5000;
