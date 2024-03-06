@@ -11,8 +11,9 @@ async function saveImage(req,res){
 try {
     let {
       base64String,
-      imageDetails: {latitude,longitude,severity,dateTaken}
+      imageDetails: {latitude,longitude,severity,dateTaken,user}
     } = req.body;
+    console.log(req.body);
     const date = new Date(dateTaken);
     const newDate = date.toLocaleDateString('en-US', {
       weekday: 'long',
@@ -36,14 +37,16 @@ try {
       },
       dateTaken: newDate,
       cloudinary_url: uploadResponse.secure_url,
-      cloudinary_public_id: uploadResponse.public_id
+      cloudinary_public_id: uploadResponse.public_id,
+      user: user
+
     });
     console.log(detailsUpload);
     if(!detailsUpload){
       throw new BadRequest('Check the severity input field.');
       }
     res.status(StatusCodes.OK).json({message: "Successfully uploaded the image",
-    data: detailsUpload
+    // data: detailsUpload
   });
 }catch(err){
   console.log(err);
