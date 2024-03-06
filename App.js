@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
+const xss = require('xss-clean');
+const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 
 const imageRouter = require('./routes/Images');
@@ -10,9 +13,15 @@ const notFound = require('./middleware/not-found');
 // const auth = require('./middleware/authentication');
 const app = express();
 
-
-app.use(cors());
+app.set('trust proxy', 1);
+app.use(rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100
+}));
 app.use(express.json({limit: '20mb'}));
+app.use(helmet());
+app.use(cors());
+app.use(xss());
 
 app.get('/',(req,res)=>{
   res.status(200).send('Welcome');

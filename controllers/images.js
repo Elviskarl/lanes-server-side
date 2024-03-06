@@ -57,4 +57,17 @@ try {
 }
 }
 
-module.exports = {getAllImages,saveImage}
+async function getUserImage(req,res){
+  const {name} = req.body;
+  if(!name || name === "" || name === 'user'){
+    return res.status(StatusCodes.BAD_REQUEST).json({message: "Please provide a registered user name"});
+  }
+  console.log(name);
+  const user = await imageModel.find({user: name});
+  if(!user){
+    return res.status(StatusCodes.NOT_FOUND).json({message: "User not found"});
+  }
+  res.status(StatusCodes.OK).json({message: "Here are the images",data: user});
+}
+
+module.exports = {getAllImages,saveImage,getUserImage}
