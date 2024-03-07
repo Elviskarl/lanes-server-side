@@ -1,0 +1,210 @@
+openapi: 3.0.0
+info:
+  title: Lanes-Api
+  contact: {}
+  version: '1.0'
+servers:
+- url: https://lanes-server.onrender.com/api/v1
+  variables: {}
+paths:
+  /user/login:
+    post:
+      tags:
+      - auth
+      summary: sign-in
+      operationId: sign-in
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/sign-in-request'
+              - example:
+                  email: Mbithi@gmail.com
+                  password: mbithimmm
+            example:
+              email: Mbithi@gmail.com
+              password: mbithimmm
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /user/register:
+    post:
+      tags:
+      - auth
+      summary: sign-up
+      operationId: sign-up
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/sign-up-request'
+              - example:
+                  userName: Mbithi
+                  email: Mbithi@gmail.com
+                  password: mbithimmm
+            example:
+              userName: Mbithi
+              email: Mbithi@gmail.com
+              password: mbithimmm
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /images:
+    get:
+      tags:
+      - images
+      summary: Get all Reports
+      operationId: GetallReports
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    post:
+      tags:
+      - images
+      summary: Generate a new report
+      operationId: Generateanewreport
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/GenerateanewreportRequest'
+              - example:
+                  base64String: -- base64 image --
+                  imageDetails:
+                    latitude: --number--
+                    longitude: --number--
+                    severity: --enum Type--
+                    dateTaken: -- from Image --
+                    user: -- userName--
+            example:
+              base64String: -- base64 image --
+              imageDetails:
+                latitude: --number--
+                longitude: --number--
+                severity: --enum Type--
+                dateTaken: -- from Image --
+                user: -- userName--
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /images/user:
+    get:
+      tags:
+      - images
+      summary: Get specific user reports
+      operationId: Getspecificuserreports
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+components:
+  schemas:
+    sign-in-request:
+      title: sign-in-request
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: Mbithi@gmail.com
+        password: mbithimmm
+    sign-up-request:
+      title: sign-up-request
+      required:
+      - userName
+      - email
+      - password
+      type: object
+      properties:
+        userName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        userName: Mbithi
+        email: Mbithi@gmail.com
+        password: mbithimmm
+    GenerateanewreportRequest:
+      title: Generate-a-new-report-Request
+      required:
+      - base64String
+      - imageDetails
+      type: object
+      properties:
+        base64String:
+          type: string
+        imageDetails:
+          allOf:
+          - $ref: '#/components/schemas/ImageDetails'
+          - {}
+      example:
+        base64String: -- base64 image --
+        imageDetails:
+          latitude: --number--
+          longitude: --number--
+          severity: --enum Type--
+          dateTaken: -- from Image --
+          user: -- userName--
+    ImageDetails:
+      title: ImageDetails
+      required:
+      - latitude
+      - longitude
+      - severity
+      - dateTaken
+      - user
+      type: object
+      properties:
+        latitude:
+          type: string
+        longitude:
+          type: string
+        severity:
+          type: string
+        dateTaken:
+          type: string
+        user:
+          type: string
+      example:
+        latitude: --number--
+        longitude: --number--
+        severity: --enum Type--
+        dateTaken: -- from Image --
+        user: -- userName--
+tags:
+- name: Misc
+  description: ''
+- name: auth
+  description: ''
+- name: images
+  description: ''

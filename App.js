@@ -23,8 +23,14 @@ app.use(rateLimit({
   max: 100
 }));
 
+// Swagger
+const swaggerUI = require('swagger-ui-express');
+const yaml = require('yamljs');
+const swaggerDocument = yaml.load('./swagger.yaml');
+
+app.use('/api-docs',swaggerUI.serve,swaggerUI.setup(swaggerDocument));
 app.get('/',(req,res)=>{
-  res.status(200).send('Welcome');
+  res.status(200).send('<h1>Welcome</h1><a href="/api-docs">Documentation</a>');
 })
 
 // Routes
