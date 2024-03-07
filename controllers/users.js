@@ -29,7 +29,6 @@ async function login(req,res){
       token
     });  
   } catch (error) {
-    console.log(error.message);
       res.status(error.statusCode).json({message: error.message});
   }
 }
@@ -37,13 +36,11 @@ async function login(req,res){
 async function register(req,res){
   try {
     const {userName,password,email} = req.body;
-    console.log(userName,password,email);
     if(!userName || !password || !email){
       throw new badRequest('Please provide a username, password and email');
     }
 
     const user = await userSchema.create({userName,password,email});
-    console.log(user);
     if(!user){
       throw new Unauthenticated('User not created');
     }
@@ -51,11 +48,9 @@ async function register(req,res){
       message: "User has been successfully created",
       userName: user.getName(),
       token: user.createJWT()});
-  //   const id = new Date().getTime();
   //   const token = jwt.sign({id, username},process.env.JWT_SECRET,{expiresIn: '1d'});
   //   res.status(StatusCodes.OK).json({message: "Welcome to the register route. You have created a token",token});  
   } catch (error) {
-    console.log(error.message);
       res.status(StatusCodes.BAD_REQUEST).json({message: error.message});
   }
 }

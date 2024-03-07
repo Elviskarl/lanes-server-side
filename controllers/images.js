@@ -13,7 +13,6 @@ try {
       base64String,
       imageDetails: {latitude,longitude,severity,dateTaken,user}
     } = req.body;
-    console.log(req.body);
     const date = new Date(dateTaken);
     const newDate = date.toLocaleDateString('en-US', {
       weekday: 'long',
@@ -28,7 +27,6 @@ try {
       tags: [severity],
       overwrite: true
     });
-    // console.log(uploadResponse);
     const detailsUpload = await imageModel.create({
       severity,
       location: {
@@ -41,12 +39,11 @@ try {
       user: user
 
     });
-    console.log(detailsUpload);
     if(!detailsUpload){
       throw new BadRequest('Check the severity input field.');
       }
     res.status(StatusCodes.OK).json({message: "Successfully uploaded the image",
-    // data: detailsUpload
+    data: detailsUpload
   });
 }catch(err){
   console.log(err);
@@ -62,7 +59,6 @@ async function getUserImage(req,res){
   if(!name || name === "" || name === 'user'){
     return res.status(StatusCodes.BAD_REQUEST).json({message: "Please provide a registered user name"});
   }
-  console.log(name);
   const user = await imageModel.find({user: name});
   if(!user){
     return res.status(StatusCodes.NOT_FOUND).json({message: "User not found"});
