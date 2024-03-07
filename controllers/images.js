@@ -63,7 +63,7 @@ async function getUserImage(req,res){
   if(!user){
     return res.status(StatusCodes.NOT_FOUND).json({message: "User not found"});
   }
-  res.status(StatusCodes.OK).json({message: "Here are the images",data: user});
+  res.status(StatusCodes.OK).json({message: "Here are the images",data: user,contributions: user.length});
 }
 
 module.exports = {getAllImages,saveImage,getUserImage}
