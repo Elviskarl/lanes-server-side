@@ -23,10 +23,10 @@ paths:
               - $ref: '#/components/schemas/sign-in-request'
               - example:
                   email: Mbithi@gmail.com
-                  password: ******
+                  password: password
             example:
               email: Mbithi@gmail.com
-              password: ******
+              password: password
         required: true
       responses:
         '200':
@@ -50,11 +50,11 @@ paths:
               - example:
                   userName: Mbithi
                   email: Mbithi@gmail.com
-                  password: ******
+                  password: password
             example:
               userName: Mbithi
               email: Mbithi@gmail.com
-              password: ******
+              password: password
         required: true
       responses:
         '200':
@@ -135,7 +135,7 @@ components:
           type: string
       example:
         email: Mbithi@gmail.com
-        password: ******
+        password: password
     sign-up-request:
       title: sign-up-request
       required:
@@ -153,7 +153,7 @@ components:
       example:
         userName: Mbithi
         email: Mbithi@gmail.com
-        password: *******
+        password: password
     GenerateanewreportRequest:
       title: Generate-a-new-report-Request
       required:
