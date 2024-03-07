@@ -109,7 +109,7 @@ paths:
           headers: {}
       deprecated: false
   /images/user:
-    get:
+    post:
       tags:
       - images
       summary: Get specific user reports
