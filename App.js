@@ -13,6 +13,7 @@ const notFound = require('./middleware/not-found');
 // const auth = require('./middleware/authentication');
 const app = express();
 
+app.set('trust proxy', 1);
 app.use(express.json({limit: '20mb'}));
 app.use(helmet());
 app.use(cors());
