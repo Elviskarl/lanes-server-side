@@ -59,7 +59,7 @@ async function getUserImage(req,res){
   if(!name || name === "" || name === 'user'){
     return res.status(StatusCodes.BAD_REQUEST).json({message: "Please provide a registered user name"});
   }
-  const user = await imageModel.find({user: name});
+  const user = await imageModel.find({user: name.trim()});
   if(!user){
     return res.status(StatusCodes.NOT_FOUND).json({message: "User not found"});
   }
